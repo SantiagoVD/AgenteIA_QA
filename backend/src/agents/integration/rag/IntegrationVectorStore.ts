@@ -1,0 +1,2 @@
+import { cosineSimilarity, embed } from "../../../ingestion/EmbeddingGenerator.ts";
+export class IntegrationVectorStore { private readonly chunks: string[]; constructor(chunks: string[]) { this.chunks = chunks; } search(question: string, limit: number): string[] { const query = embed(question); return this.chunks.map(chunk => ({ chunk, score: cosineSimilarity(query, embed(chunk)) })).sort((a,b) => b.score-a.score).slice(0,limit).map(item => item.chunk); } }

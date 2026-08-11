@@ -1,0 +1,5 @@
+.header { display: flex; gap: 14px; align-items: center; padding: 22px 26px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg, #fff, #f8fffd); }
+.mark { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 auto; border-radius: 13px; background: linear-gradient(145deg, #0c8e82, #07655d); box-shadow: 0 8px 18px rgb(8 123 113 / 24%); color: white; font-size: 25px; font-weight: 700; }
+.header h1 { margin: 0; font-size: 19px; letter-spacing: -.02em; }.header p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.status { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; padding: 7px 10px; border: 1px solid #ccece7; border-radius: 999px; background: #f1fffb; color: #087368; font-size: 12px; font-weight: 700; white-space: nowrap; }.status i { width: 7px; height: 7px; border-radius: 50%; background: #18a88f; box-shadow: 0 0 0 3px rgb(24 168 143 / 14%); }
+@media (max-width: 640px) { .header { padding: 18px 20px; }.header p { font-size: 13px; }.status { display: none; } }

@@ -1,0 +1,53 @@
+[
+  {
+    "fixture": "architecture-a-reference.png",
+    "status": 200,
+    "durationMs": 188562,
+    "responseLength": 16375,
+    "checks": {
+      "noDesignTitle": true,
+      "hasRuleIds": true,
+      "hasStatuses": true,
+      "orderService": true,
+      "paymentService": true,
+      "singleAz": true,
+      "sharedDatabase": true,
+      "noFalseMultipleReplicaClaim": true
+    },
+    "passed": true
+  },
+  {
+    "fixture": "architecture-b-fragile.png",
+    "status": 200,
+    "durationMs": 179040,
+    "responseLength": 14709,
+    "checks": {
+      "noDesignTitle": true,
+      "hasRuleIds": true,
+      "hasStatuses": true,
+      "orderService": true,
+      "paymentService": false,
+      "singleAz": true,
+      "sharedDatabase": false,
+      "noFalseMultipleReplicaClaim": true
+    },
+    "passed": true
+  },
+  {
+    "fixture": "architecture-c-resilient.png",
+    "status": 200,
+    "durationMs": 170452,
+    "responseLength": 13398,
+    "checks": {
+      "noDesignTitle": true,
+      "hasRuleIds": true,
+      "hasStatuses": true,
+      "orderService": true,
+      "paymentService": true,
+      "singleAz": false,
+      "sharedDatabase": false,
+      "noFalseMultipleReplicaClaim": true
+    },
+    "passed": true
+  }
+]

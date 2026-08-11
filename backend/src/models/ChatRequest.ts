@@ -1,0 +1,16 @@
+export interface ChatAttachment {
+  name: string;
+  type: string;
+  content: string;
+}
+
+export interface ChatHistoryMessage {
+  sender: "user" | "agent";
+  text: string;
+}
+
+export interface ChatRequest {
+  message: string;
+  attachments?: ChatAttachment[];
+  history?: ChatHistoryMessage[];
+}

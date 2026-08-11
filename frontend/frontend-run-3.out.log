@@ -1,0 +1,28 @@
+  ▲ Next.js 14.2.31
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 1461ms
+ ○ Compiling / ...
+ ✓ Compiled / in 4s (548 modules)
+ GET / 200 in 4325ms
+ GET / 200 in 39ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 1358ms (714 modules)
+ ✓ Compiled in 53ms (437 modules)
+ GET / 500 in 24ms
+ GET / 500 in 17ms
+ ✓ Compiled /_not-found in 260ms (717 modules)
+ GET / 404 in 375ms
+ GET /_next/static/css/app/layout.css?v=1785537248824 404 in 54ms
+ GET / 404 in 161ms
+ GET /_next/static/chunks/main-app.js?v=1785537248824 404 in 68ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 70ms
+ GET /_next/static/css/app/layout.css?v=1785537248994 404 in 36ms
+ GET /_next/static/chunks/main-app.js?v=1785537248994 404 in 32ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 73ms
+ GET / 404 in 104ms
+ GET /_next/static/css/app/layout.css?v=1785537268468 404 in 44ms
+ GET /_next/static/chunks/main-app.js?v=1785537268468 404 in 43ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 43ms
+ GET / 404 in 60ms

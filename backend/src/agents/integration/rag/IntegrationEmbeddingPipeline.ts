@@ -1,0 +1,2 @@
+import { join } from "node:path"; import { chunkText } from "../../../ingestion/Chunker.ts"; import { loadPdf } from "../../../ingestion/PdfLoader.ts"; import { IntegrationVectorStore } from "./IntegrationVectorStore.ts";
+export class IntegrationEmbeddingPipeline { private store?: Promise<IntegrationVectorStore>; build(): Promise<IntegrationVectorStore> { return this.store ??= loadPdf(join(process.cwd(), "documents", "integration", "Integration_Architecture_Guidelines_RAG.pdf")).then(chunkText).then(chunks => new IntegrationVectorStore(chunks)); } }

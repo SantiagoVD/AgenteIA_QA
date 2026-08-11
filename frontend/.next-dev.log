@@ -1,0 +1,240 @@
+
+> exchange-rate-agent-frontend@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.31
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 8.6s (548 modules)
+ GET / 200 in 9166ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+ GET / 200 in 64ms
+ GET / 200 in 66ms
+ ✓ Compiled /_not-found in 323ms (483 modules)
+ POST /api/chat 404 in 500ms
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+ GET / 200 in 72ms
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+  ▲ Next.js 14.2.31
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.9s
+ ○ Compiling / ...
+(node:9508) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Failed to proxy http://localhost:3001/api/chat AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+Failed to proxy http://localhost:3001/api/chat AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+ ✓ Compiled /_error in 9.1s (714 modules)
+ ✓ Compiled in 87ms (277 modules)
+ GET / 200 in 9352ms
+ ✓ Compiled in 84ms (437 modules)
+ GET / 200 in 56ms
+Failed to proxy http://localhost:3001/api/chat AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+<w> [webpack.cache.PackFileCacheStrategy] Caching failed for pack: Error: Unable to snapshot resolve dependencies
+Failed to proxy http://localhost:3001/api/chat AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+AggregateError [ECONNREFUSED]: 
+    at internalConnectMultiple (node:net:1194:18)
+    at afterConnectMultiple (node:net:1784:7) {
+  code: 'ECONNREFUSED',
+  [errors]: [
+    Error: connect ECONNREFUSED ::1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '::1',
+      port: 3001
+    },
+    Error: connect ECONNREFUSED 127.0.0.1:3001
+        at createConnectionError (node:net:1747:14)
+        at afterConnectMultiple (node:net:1777:16) {
+      errno: -4078,
+      code: 'ECONNREFUSED',
+      syscall: 'connect',
+      address: '127.0.0.1',
+      port: 3001
+    }
+  ]
+}
+[?25h

@@ -1,0 +1,53 @@
+
+> exchange-rate-agent-backend@0.1.0 dev
+> node --env-file=.env --import tsx --watch src/api/chat/server.ts
+
+node:os:306
+    throw new ERR_SYSTEM_ERROR(ctx);
+          ^
+
+SystemError [ERR_SYSTEM_ERROR]: A system error occurred: uv_os_get_passwd returned ENOMEM (not enough memory)
+    at Object.userInfo (node:os:306:11)
+    at file:///C:/Users/Mayely/Downloads/AgenteIA/backend/node_modules/tsx/dist/temporary-directory-BDDVQOvU.mjs:1:84
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:96:9) {
+  code: 'ERR_SYSTEM_ERROR',
+  info: {
+    errno: -4057,
+    code: 'ENOMEM',
+    message: 'not enough memory',
+    syscall: 'uv_os_get_passwd'
+  },
+  errno: [Getter/Setter],
+  syscall: [Getter/Setter]
+}
+
+Node.js v24.18.1
+Failed running 'src/api/chat/server.ts'. Waiting for file changes before restarting...
+Restarting 'src/api/chat/server.ts'
+node:os:306
+    throw new ERR_SYSTEM_ERROR(ctx);
+          ^
+
+SystemError [ERR_SYSTEM_ERROR]: A system error occurred: uv_os_get_passwd returned ENOMEM (not enough memory)
+    at Object.userInfo (node:os:306:11)
+    at file:///C:/Users/Mayely/Downloads/AgenteIA/backend/node_modules/tsx/dist/temporary-directory-BDDVQOvU.mjs:1:84
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:96:9) {
+  code: 'ERR_SYSTEM_ERROR',
+  info: {
+    errno: -4057,
+    code: 'ENOMEM',
+    message: 'not enough memory',
+    syscall: 'uv_os_get_passwd'
+  },
+  errno: [Getter/Setter],
+  syscall: [Getter/Setter]
+}
+
+Node.js v24.18.1
+Failed running 'src/api/chat/server.ts'. Waiting for file changes before restarting...

@@ -1,0 +1,20 @@
+
+> exchange-rate-agent-frontend@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.31
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 3s
+ ○ Compiling / ...
+ ✓ Compiled / in 8.3s (550 modules)
+ GET / 200 in 8908ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1040ms (466 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 2066ms
+ ○ Compiling / ...
+ ✓ Compiled / in 834ms (236 modules)
+ GET / 200 in 2047ms
+ GET / 200 in 73ms
+ GET / 200 in 74ms
