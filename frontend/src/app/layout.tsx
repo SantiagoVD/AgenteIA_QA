@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Exchange Rate Agent",
-  description: "Agente especializado en consultas sobre el tipo de cambio del dólar.",
+  title: "Architecture Multi-Agent",
+  description: "Agente multimodal para diseño y validación de arquitecturas de software.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

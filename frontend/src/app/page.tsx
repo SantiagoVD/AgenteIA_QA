@@ -9,7 +9,7 @@ export default function HomePage() {
 
   return (
     <main className="app-shell">
-      <section className="chat-card" aria-label="Exchange Rate Agent">
+      <section className="chat-card" aria-label="Architecture Multi-Agent">
         <Header />
         <Chat {...chat} />
       </section>

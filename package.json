@@ -1,5 +1,5 @@
 {
-  "name": "exchange-rate-agent",
+  "name": "architecture-multi-agent",
   "private": true,
   "scripts": {
     "dev": "npm --prefix frontend run dev",

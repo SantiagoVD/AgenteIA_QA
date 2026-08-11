@@ -1,10 +1,11 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
 
 const fixtures = (process.env.E2E_FIXTURES ?? "architecture-a-reference.png,architecture-b-fragile.png,architecture-c-resilient.png").split(",").map((item) => item.trim()).filter(Boolean);
 const endpoint = process.env.BACKEND_URL ?? "http://localhost:3001/api/chat";
 const resultsDirectory = join(process.cwd(), "tests", "e2e-results");
 const summaryPath = join(resultsDirectory, "summary.json");
+await mkdir(resultsDirectory, { recursive: true });
 const previous = await readFile(summaryPath, "utf8").then((value) => JSON.parse(value) as Array<Record<string, unknown>>).catch(() => []);
 const summary: Array<Record<string, unknown>> = previous.filter((item) => !fixtures.includes(String(item.fixture)));
 

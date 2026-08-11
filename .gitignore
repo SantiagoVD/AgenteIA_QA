@@ -1,6 +1,22 @@
+# Dependencies and build artifacts
 node_modules/
 .next/
 dist/
-.env*
-!.env.example
+coverage/
 *.tsbuildinfo
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Runtime and generated outputs
+*.log
+logs/
+backend/tests/e2e-results/
+
+# Operating system and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
