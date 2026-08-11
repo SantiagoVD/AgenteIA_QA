@@ -55,12 +55,19 @@ export abstract class BaseAgent implements IAgent {
     const recommendations = selected.map((item) => item.recommendation);
     const risks = selected.map((item) => item.risk);
     const response = relevant ? `${this.name}: Hallazgos: ${findings.join(" ")} Recomendaciones: ${recommendations.join(" ")} Riesgos: ${risks.join(" ")}` : `${this.name}: no se encontró evidencia suficiente.`;
-    const ruleIds = [...new Set(context.flatMap((chunk) => [...chunk.matchAll(/RULE_ID:\s*([A-Z0-9-]+)/g)].map((match) => match[1])))];
+    const allRuleIds = [...new Set(context.flatMap((chunk) => [...chunk.matchAll(/RULE_ID:\s*([A-Z0-9-]+)/g)].map((match) => match[1])))];
+    const ruleIds = this.relevantRuleIds(query, allRuleIds);
     return { agent: this.name, response, context, relevant, findings, recommendations, risks, ruleIds };
   }
 
   async validate(input: AgentValidationInput): Promise<AgentValidationResponse> {
     return validateDomain(this.validationName, input, this.retrieveValidation);
+  }
+
+  private relevantRuleIds(query: string, ruleIds: string[]): string[] {
+    if (this.name !== "Integration" || !/api\s+gateway/.test(query)) return ruleIds;
+    const focused = ruleIds.filter((ruleId) => /^INT-(?:GATEWAY|API|REST|SEC|TRACE|AUTH|RATE)-/.test(ruleId));
+    return focused.length > 0 ? focused : ruleIds;
   }
 
   private normalize(value: string): string { return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }

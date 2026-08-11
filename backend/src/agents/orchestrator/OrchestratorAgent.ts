@@ -10,6 +10,7 @@ import type { AgentValidationInput, AgentValidationResponse, ValidationFinding }
 import { constants, logEvent } from "../../config/constants.ts";
 import type { IAgent } from "../shared/IAgent.ts";
 import { AgentRouter, type AgentRoutingDecision, type ArchitectureDomain } from "./AgentRouter.ts";
+import { ConversationGuide } from "./ConversationGuide.ts";
 
 export interface SupplementalDocument {
   name: string;
@@ -23,6 +24,7 @@ export class OrchestratorAgent {
   private readonly integration: IAgent;
   private readonly infrastructure: IAgent;
   private readonly router: AgentRouter;
+  private readonly conversation: ConversationGuide;
 
   constructor(
     llm: ILLMProvider,
@@ -30,12 +32,14 @@ export class OrchestratorAgent {
     integration: IAgent = new IntegrationAgent(llm),
     infrastructure: IAgent = new InfrastructureAgent(llm),
     router: AgentRouter = new AgentRouter(),
+    conversation: ConversationGuide = new ConversationGuide(),
   ) {
     this.llm = llm;
     this.cloud = cloud;
     this.integration = integration;
     this.infrastructure = infrastructure;
     this.router = router;
+    this.conversation = conversation;
   }
 
   async answer(question: string, supplementalDocuments: SupplementalDocument[] = [], imageNames: string[] = [], history: ChatHistoryMessage[] = [], architectureImage?: { type: string; content: string }, requestId = "internal"): Promise<string> {
@@ -46,13 +50,20 @@ export class OrchestratorAgent {
     if (mode === "VALIDATION" && !architectureImage) {
       return "Estado general: INCONCLUSIVE\n\nNo se recibió una imagen o evidencia estructurada de la arquitectura. Adjunta el diagrama para comparar evidencia visible contra los lineamientos.";
     }
+    if (!architectureImage && supplementalDocuments.length === 0) {
+      const guided = this.conversation.respond(question, history);
+      if (guided) {
+        await logEvent("orchestrator.conversation.guided", { requestId, kind: guided.kind, topic: guided.topic });
+        return guided.message;
+      }
+    }
     const visualStartedAt = Date.now();
     const visual = architectureImage ? await this.llm.analyzeArchitectureImage(architectureImage.content, architectureImage.type) : undefined;
     if (mode === "VALIDATION" && visual) {
       if (constants.validationDebug) await logEvent("validation.visual.completed", { durationMs: Date.now() - visualStartedAt, components: visual.components.map(({ name }) => name), uncertainties: visual.uncertainties.length });
       return this.validateArchitecture(question, visual, requestId);
     }
-    const analysisQuestion = `${this.previousUserQuestion(question, history) ?? question}${visual ? `\nEvidencia visual observada: ${this.visualEvidence(visual)}` : ""}`;
+    const analysisQuestion = `${this.conversation.contextualize(question, history)}${visual ? `\nEvidencia visual observada: ${this.visualEvidence(visual)}` : ""}`;
     const routing = this.router.route(analysisQuestion, visual);
     await this.logRouting(requestId, mode, routing);
     const reports: AgentResponse[] = [];
@@ -72,7 +83,8 @@ export class OrchestratorAgent {
       parts.push(this.analyzeSupplementalDocuments(question, supplementalDocuments));
     }
     if (relevant.length > 0) {
-      parts.push(this.synthesize(question, relevant));
+      const opening = this.conversation.opening(question, history);
+      parts.push([opening, this.synthesize(this.conversation.displayQuestion(question, history), relevant)].filter(Boolean).join("\n\n"));
     }
     if (imageNames.length > 0) {
       parts.push(`Se analizó ${imageNames.length === 1 ? `la imagen "${imageNames[0]}"` : `${imageNames.length} imágenes`} antes de recuperar los lineamientos. Las recomendaciones se limitan a la evidencia visible y a las reglas RAG recuperadas.`);
@@ -234,13 +246,6 @@ export class OrchestratorAgent {
       .join(" ")
       .slice(0, 700)
       .trim();
-  }
-
-  private previousUserQuestion(question: string, history: ChatHistoryMessage[]): string | undefined {
-    const normalized = this.normalize(question).trim();
-    const isFollowUp = normalized.length <= 55 && /\b(que|porque|por que|eso|esto|explica|detalla|como asi)\b/.test(normalized);
-    if (!isFollowUp) return undefined;
-    return [...history].reverse().find((message) => message.sender === "user" && message.text.trim())?.text;
   }
 
   private isGreeting(question: string): boolean {

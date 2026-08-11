@@ -14,6 +14,19 @@ test("integración: DESIGN textual conserva respuesta de recomendación", async 
   assert.match(result, /Fuentes RAG:/);
 });
 
+test("integración: opción de lineamientos para API Gateway prioriza reglas específicas", async () => {
+  const history = [
+    { sender: "user" as const, text: "api gateway" },
+    { sender: "agent" as const, text: "1. Entender qué es API Gateway.\n2. Conocer los lineamientos recomendados.\n3. Diseñar API Gateway.\n4. Validar una arquitectura." },
+  ];
+  const result = await new OrchestratorAgent(fakeProvider()).answer("2", [], [], history);
+  assert.match(result, /Entendido: quieres conocer los lineamientos/i);
+  const ids = [...result.matchAll(/\bINT-[A-Z0-9-]+/g)].map(([id]) => id);
+  assert.ok(ids.length > 0);
+  assert.ok(ids.every((id) => /^INT-(?:GATEWAY|API|REST|SEC|TRACE|AUTH|RATE)-/.test(id)), ids.join(", "));
+  assert.doesNotMatch(result, /INT-(?:DATA|ASYNC|POINT|SYNC)-/);
+});
+
 test("integración: VALIDATION consolida los tres RAG, fuentes y evidencia", async () => {
   const visual = architectureFixture();
   const result = await new OrchestratorAgent(fakeProvider(visual)).answer("¿Esta arquitectura cumple con los lineamientos?", [], ["architecture.png"], [], { type: "image/png", content: "fixture" }, "integration");

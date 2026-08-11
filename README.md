@@ -12,6 +12,7 @@ El sistema permite realizar consultas de arquitectura en español, adjuntar docu
 - Análisis de imágenes con Qwen Vision, OCR con Tesseract y preprocesamiento con Sharp.
 - Tres fuentes RAG aisladas: Cloud, Integración e Infraestructura.
 - Router selectivo que ejecuta únicamente los especialistas justificados por la consulta o el diagrama.
+- Conversación guiada para aclarar términos ambiguos y recopilar requisitos antes de recomendar una solución.
 - Validación determinista con estados `COMPLIANT`, `NON_COMPLIANT`, `NOT_EVIDENT` y `NOT_APPLICABLE`.
 - Soporte para imágenes, PDF y archivos de texto.
 - Historial corto de conversación y trazabilidad mediante `requestId`.
@@ -52,6 +53,12 @@ Ejemplos:
 | `API crítica en AWS, Kubernetes y multi-AZ` | Cloud + Integración + Infraestructura |
 
 Los especialistas seleccionados se ejecutan de forma secuencial y cada uno consulta únicamente su propio documento RAG.
+
+### Conversación guiada
+
+Una frase breve como `api gateway`, `Kubernetes` o `Kafka` no se interpreta automáticamente como una solicitud de diseño. El agente pregunta si el usuario necesita una definición, lineamientos, ayuda para crear una solución o validar una arquitectura existente.
+
+Cuando el usuario desea diseñar o implementar un componente, el agente puede solicitar contexto sobre estilo arquitectónico, plataforma de despliegue, consumidores, protocolos, seguridad, tráfico y disponibilidad. Las respuestas breves posteriores conservan el tema de los últimos mensajes y evitan repetir preguntas ya respondidas.
 
 #### VALIDATION
 

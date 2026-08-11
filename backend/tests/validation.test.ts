@@ -13,6 +13,7 @@ import { IntegrationRetriever } from "../src/agents/integration/rag/IntegrationR
 import { InfrastructureRetriever } from "../src/agents/infrastructure/rag/InfrastructureRetriever.ts";
 import { architectureFixture } from "./fixtures.ts";
 import { AgentRouter } from "../src/agents/orchestrator/AgentRouter.ts";
+import { ConversationGuide } from "../src/agents/orchestrator/ConversationGuide.ts";
 
 const rule = (ruleId: string, title: string, priority: ValidationPriority = "HIGH"): RetrievedGuideline => ({ ruleId, title, priority, content: `RULE_ID: ${ruleId}\n${title}\nPrioridad\n${priority}`, document: `${ruleId.split("-")[0]}.pdf`, section: "test", matchedQueries: [] });
 
@@ -110,7 +111,7 @@ test("router selecciona tres dominios solo con señales explícitas de los tres"
   assert.deepEqual(routing.selected, ["cloud", "integration", "infrastructure"]);
 });
 
-test("api gateway no ejecuta agentes cloud ni infrastructure", async () => {
+test("api gateway aislado pide aclaración amable sin ejecutar agentes", async () => {
   const calls: string[] = [];
   const llm: ILLMProvider = { generate: async () => "", healthCheck: async () => undefined, analyzeArchitectureImage: async () => { throw new Error("no debe llamarse"); } };
   const makeAgent = (name: string, relevant: boolean): IAgent => ({
@@ -121,9 +122,99 @@ test("api gateway no ejecuta agentes cloud ni infrastructure", async () => {
     validate: async () => { throw new Error("no debe llamarse"); },
   });
   const result = await new OrchestratorAgent(llm, makeAgent("Cloud", false), makeAgent("Integration", true), makeAgent("Infrastructure", false)).answer("api gateway");
+  assert.deepEqual(calls, []);
+  assert.match(result, /¿a qué te refieres exactamente?/i);
+  assert.match(result, /Entender qué es API Gateway/i);
+  assert.match(result, /qué arquitectura utilizarás/i);
+});
+
+test("la conversación trata api gateway con interrogación y errores comunes como el mismo tema", () => {
+  const guide = new ConversationGuide();
+  assert.equal(guide.respond("api gateway?", [])?.kind, "CLARIFICATION");
+  assert.equal(guide.respond("api gatway?", [])?.kind, "CLARIFICATION");
+  assert.equal(guide.respond("API gateaway", [])?.topic, "API Gateway");
+});
+
+test("small talk recibe una respuesta cordial y no consulta los lineamientos", () => {
+  const response = new ConversationGuide().respond("¿Cómo estás?", []);
+  assert.equal(response?.kind, "SMALL_TALK");
+  assert.match(response?.message ?? "", /Muy bien, gracias por preguntar/i);
+});
+
+test("las opciones numéricas y sus variantes conservan el menú de API Gateway", () => {
+  const guide = new ConversationGuide();
+  const history = [
+    { sender: "user" as const, text: "api gateway" },
+    { sender: "agent" as const, text: "1. Entender qué es API Gateway.\n2. Conocer los lineamientos recomendados.\n3. Diseñar API Gateway.\n4. Validar una arquitectura." },
+  ];
+  assert.equal(guide.respond("1", history)?.kind, "DEFINITION");
+  assert.equal(guide.respond("me refería a la 1", history)?.kind, "DEFINITION");
+  assert.match(guide.contextualize("me refería a la 2", history), /Lineamientos recomendados para un API Gateway/i);
+  assert.match(guide.opening("opción dos", history) ?? "", /Entendido.*lineamientos/i);
+  assert.equal(guide.respond("3", history)?.kind, "DISCOVERY");
+  assert.equal(guide.respond("la cuarta", history)?.kind, "VALIDATION_HELP");
+});
+
+test("la opción 2 ejecuta solo Integration y confirma la intención", async () => {
+  const calls: string[] = [];
+  const llm: ILLMProvider = { generate: async () => "", healthCheck: async () => undefined, analyzeArchitectureImage: async () => { throw new Error("no debe llamarse"); } };
+  const makeAgent = (name: string): IAgent => ({
+    answer: async () => {
+      calls.push(name);
+      return { agent: name, response: "", context: [], relevant: true, findings: ["hallazgo"], recommendations: ["recomendación"], risks: [], ruleIds: ["INT-GATEWAY-001"] };
+    },
+    validate: async () => { throw new Error("no debe ejecutarse"); },
+  });
+  const history = [
+    { sender: "user" as const, text: "api gateway" },
+    { sender: "agent" as const, text: "1. Entender qué es API Gateway.\n2. Conocer los lineamientos recomendados.\n3. Diseñar API Gateway.\n4. Validar una arquitectura." },
+  ];
+  const result = await new OrchestratorAgent(llm, makeAgent("Cloud"), makeAgent("Integration"), makeAgent("Infrastructure")).answer("me refería a la 2", [], [], history);
   assert.deepEqual(calls, ["Integration"]);
-  assert.match(result, /Recomendación de Integración/);
-  assert.doesNotMatch(result, /Kubernetes|contenedor/i);
+  assert.match(result, /Entendido: quieres conocer los lineamientos/i);
+  assert.match(result, /lineamientos recomendados para API Gateway/i);
+});
+
+test("follow-up qué significa conserva API Gateway como tema y responde la definición", async () => {
+  const llm: ILLMProvider = { generate: async () => "", healthCheck: async () => undefined, analyzeArchitectureImage: async () => { throw new Error("no debe llamarse"); } };
+  const agent: IAgent = { answer: async () => { throw new Error("no debe ejecutarse"); }, validate: async () => { throw new Error("no debe ejecutarse"); } };
+  const history = [
+    { sender: "user" as const, text: "api gateway" },
+    { sender: "agent" as const, text: "¿Quieres una definición o lineamientos?" },
+  ];
+  const result = await new OrchestratorAgent(llm, agent, agent, agent).answer("¿Qué significa?", [], [], history);
+  assert.match(result, /punto de entrada centralizado/i);
+  assert.match(result, /autenticación y autorización/i);
+});
+
+test("solicitud de creación sin contexto inicia levantamiento de requisitos", async () => {
+  const llm: ILLMProvider = { generate: async () => "", healthCheck: async () => undefined, analyzeArchitectureImage: async () => { throw new Error("no debe llamarse"); } };
+  const agent: IAgent = { answer: async () => { throw new Error("no debe ejecutarse todavía"); }, validate: async () => { throw new Error("no debe ejecutarse"); } };
+  const result = await new OrchestratorAgent(llm, agent, agent, agent).answer("Quiero lineamientos para crear un API Gateway");
+  assert.match(result, /monolito modular, microservicios, serverless/i);
+  assert.match(result, /AWS, Azure, GCP, on-premise/i);
+  assert.match(result, /OAuth 2\.0, OIDC, JWT, mTLS/i);
+});
+
+test("respuesta al levantamiento conserva el tema y ejecuta los agentes pertinentes", async () => {
+  const calls: string[] = [];
+  const llm: ILLMProvider = { generate: async () => "", healthCheck: async () => undefined, analyzeArchitectureImage: async () => { throw new Error("no debe llamarse"); } };
+  const makeAgent = (name: string): IAgent => ({
+    answer: async () => {
+      calls.push(name);
+      return { agent: name, response: "", context: [], relevant: true, findings: ["hallazgo"], recommendations: ["recomendación"], risks: [], ruleIds: [`${name.toUpperCase()}-001`] };
+    },
+    validate: async () => { throw new Error("no debe ejecutarse"); },
+  });
+  const history = [
+    { sender: "user" as const, text: "api gateway" },
+    { sender: "agent" as const, text: "¿Qué necesitas sobre API Gateway?" },
+    { sender: "user" as const, text: "Quiero lineamientos para crearlo" },
+    { sender: "agent" as const, text: "¿Qué estilo de arquitectura utilizarás y dónde se desplegará?" },
+  ];
+  const result = await new OrchestratorAgent(llm, makeAgent("Cloud"), makeAgent("Integration"), makeAgent("Infrastructure")).answer("Microservicios en AWS, público, REST y OAuth 2.0", [], [], history);
+  assert.deepEqual(calls, ["Cloud", "Integration"]);
+  assert.match(result, /Propuesta de arquitectura coordinada/);
 });
 
 test("consulta textual existente conserva modo DESIGN", async () => {

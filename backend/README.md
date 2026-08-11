@@ -8,6 +8,7 @@ Backend Node.js y TypeScript de Architecture Multi-Agent. La documentación comp
 - Procesar imágenes, PDF y archivos de texto.
 - Analizar diagramas una sola vez mediante Qwen Vision y OCR.
 - Seleccionar de forma determinista uno, dos o tres especialistas.
+- Guiar consultas ambiguas y conservar su contexto durante el levantamiento de requisitos.
 - Ejecutar secuencialmente únicamente los agentes seleccionados.
 - Recuperar reglas desde los RAG aislados de Cloud, Integración e Infraestructura.
 - Consolidar resultados y registrar trazabilidad por `requestId`.
