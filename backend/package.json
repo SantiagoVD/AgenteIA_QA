@@ -1,28 +1,19 @@
 {
-  "name": "software-architect-multi-agent-backend",
+  "name": "agenteia-qa-backend",
   "version": "0.1.0",
   "private": true,
-  "description": "PoC local de agentes de arquitectura con Ollama y Qwen.",
+  "description": "AgenteIA_QA: análisis de cumplimiento QA de repositorios mediante evidencia estática y agentes locales.",
   "type": "module",
   "scripts": {
-    "dev": "node --env-file=.env --experimental-strip-types --watch src/api/chat/server.ts",
-    "start": "node --env-file=.env --experimental-strip-types src/api/chat/server.ts",
+    "dev": "node --env-file=.env --experimental-strip-types --watch src/api/analyses/server.ts",
+    "start": "node --env-file=.env --experimental-strip-types src/api/analyses/server.ts",
     "build": "tsc --noEmit",
-    "ingest": "node --env-file=.env --experimental-strip-types src/ingestion/ingest.ts",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
-    "fixtures": "node --experimental-strip-types scripts/generate-fixtures.ts",
-    "test:e2e": "node --env-file=.env --experimental-strip-types scripts/e2e-validation.ts"
+    "ingest": "node --experimental-strip-types scripts/ingest-qa.ts"
   },
-  "dependencies": {
-    "@tesseract.js-data/eng": "^1.0.0",
-    "pdf-parse": "^1.1.1",
-    "sharp": "^0.35.3",
-    "tesseract.js": "^7.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "@types/pdf-parse": "^1.1.5",
-    "tsx": "^4.20.0",
     "typescript": "^5.8.0"
   }
 }

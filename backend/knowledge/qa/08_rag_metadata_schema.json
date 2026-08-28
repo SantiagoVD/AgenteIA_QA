@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "description": "Metadata recomendada por chunk para el corpus QA.",
+  "fields": {
+    "chunk_id": "Identificador único del chunk",
+    "guideline_id": "Identificador del lineamiento, por ejemplo QA-GEN-008",
+    "title": "Título corto",
+    "domain": "quality_assurance | product_quality | software_testing | secure_software_development | application_security | web_security_testing",
+    "source": "Documento o marco de referencia",
+    "source_version": "Versión del marco",
+    "priority": "critical | high | medium | low",
+    "evidence_types": [
+      "source_code",
+      "configuration",
+      "test",
+      "pipeline",
+      "documentation",
+      "ticket",
+      "runtime_log"
+    ],
+    "applicability": [
+      "web",
+      "api",
+      "backend",
+      "frontend",
+      "cloud",
+      "all"
+    ],
+    "text": "Contenido del lineamiento"
+  }
+}

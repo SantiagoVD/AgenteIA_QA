@@ -1,5 +1,5 @@
 {
-  "name": "architecture-multi-agent",
+  "name": "agenteia-qa",
   "private": true,
   "scripts": {
     "dev": "npm --prefix frontend run dev",

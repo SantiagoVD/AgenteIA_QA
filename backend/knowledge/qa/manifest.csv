@@ -1,0 +1,10 @@
+filename,purpose,reference,version
+00_README.md,Guía del corpus,Propio,1.0
+01_qa_policy_general.md,Política QA interna,Propio,1.0
+02_product_quality_iso25010_mapping.md,Calidad de producto,ISO/IEC 25010,2023
+03_testing_iso29119_mapping.md,Pruebas de software,ISO/IEC/IEEE 29119,2022
+04_secure_development_nist_ssdf.md,Desarrollo seguro,NIST SP 800-218,1.1
+05_application_security_owasp_asvs.md,Seguridad de aplicación,OWASP ASVS,5.0.0
+06_web_security_testing_owasp_wstg.md,Testing de seguridad web,OWASP WSTG,4.2
+07_evidence_and_compliance_model.md,Modelo de decisión y evidencia,Propio,1.0
+08_rag_metadata_schema.json,Esquema de metadata,Propio,1.0
